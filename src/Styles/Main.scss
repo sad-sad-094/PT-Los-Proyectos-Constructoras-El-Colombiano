@@ -8,6 +8,7 @@ E-mail: sadw621@gmail.com */
 @import 'variables';
 @import 'mixins';
 @import 'containers';
+@import 'tables';
 
 body {
   font-family: $fonts;
@@ -25,4 +26,28 @@ body {
 .footer h1 {
   font-size: 1.2rem;
   color: #fff;
+}
+
+.modal-content {
+  background-color: #b6c4eb;
+  font-family: $fonts;
+}
+
+.btn-primary {
+  background-color: #0A58CA;
+  border: solid 1px #fff;
+}
+
+.btn-success {
+  background-color: #ffc340;
+  border: solid 1px #fff;
+}
+
+.form-label {
+  font-family: $fonts;
+}
+
+.navbar {
+  font-family: $fonts;
+  font-size: 1.2rem;
 }
