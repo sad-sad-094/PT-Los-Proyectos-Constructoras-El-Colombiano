@@ -6,7 +6,23 @@ E-mail: sadw621@gmail.com */
 @import url('https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@400;700&display=swap');
 
 @import 'variables';
+@import 'mixins';
+@import 'containers';
 
 body {
   font-family: $fonts;
+}
+
+.footer {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  width: 100%;
+  background-color: black;
+  gap: 0.8rem;
+}
+
+.footer h1 {
+  font-size: 1.2rem;
+  color: #fff;
 }

@@ -1,0 +1,9 @@
+/* Author: Sebastian Aguirre Duque
+E-mail: sadw621@gmail.com */
+
+@mixin column-container {
+  display:flex;
+  flex-direction:column;
+  justify-content: center;
+  align-items: center;
+}

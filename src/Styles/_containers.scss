@@ -1,0 +1,34 @@
+/* Author: Sebastian Aguirre Duque
+E-mail: sadw621@gmail.com */
+
+.main-container {
+  @include column-container;
+  margin: 5rem .5rem auto auto;
+  gap: 1rem;
+}
+
+.c-container {
+  @include column-container;
+  gap: 1rem;
+  width: 90%;
+  background-color: #b5bac9;
+  border-radius: 20px;
+  padding: 0.8rem;
+  margin-top: 3rem;
+}
+
+.c-container h1 {
+  font-size: 1.7em;
+  margin-top: 1rem;
+  font-weight: bold;
+}
+
+.c-container h3 {
+  font-size: 1.25rem;
+  text-align: center;
+}
+
+.c-container p {
+  font-size: 1rem;
+  text-align: justify;
+}
