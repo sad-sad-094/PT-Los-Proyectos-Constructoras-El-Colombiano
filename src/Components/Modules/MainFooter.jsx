@@ -2,13 +2,34 @@
 E-mail: sadw621@gmail.com */
 
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 function MainFooter() {
 
+  const [currentYear, setCurrentYear] = useState(2022);
+
+  useEffect(() => {
+    let year = new Date().getFullYear();
+    setCurrentYear(year);
+  }, [setCurrentYear])
+
   return (
 
-    <div></div>
+    <>
+
+      <div>
+        <div className="footer">
+          <div>
+            <h1>Sebastian Aguirre Duque</h1>
+          </div>
+          <div>
+            <h1><span>&#169;</span></h1>
+          </div>
+          <div><h1>{currentYear}</h1></div>
+        </div>
+      </div>
+
+    </>
 
   )
 
