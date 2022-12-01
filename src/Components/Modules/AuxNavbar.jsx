@@ -9,8 +9,16 @@ import Navbar from 'react-bootstrap/Navbar';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
+import { doc, getDoc, setDoc } from "firebase/firestore";
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile } from 'firebase/auth';
+import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
+
+import { db, auth } from '../../Utils/Firebase';
 
 function AuxNavbar() {
+
+  const navigation = useNavigate();
 
   const [showLogIn, setShowLogIn] = useState(false);
 
@@ -21,6 +29,64 @@ function AuxNavbar() {
 
   const handleCloseSingIn = () => setShowSingIn(false);
   const handleShowSingIn = () => setShowSingIn(true);
+
+  const defaultNewUser = () => {
+    return {
+      name: '',
+      email: '',
+      password: ''
+    }
+  }
+
+  const defaultUser = () => {
+    return {
+      name:'',
+      email: '',
+      password: ''
+    }
+  }
+
+  const [newUser, setNewUser] = useState(defaultNewUser());
+  const [logUser, setLogUser] = useState(defaultUser());
+
+  const setUser = (event) => {
+    setNewUser({
+      ...newUser,
+      [event.target.name]: event.target.value
+    })
+  }
+
+  const letLogUser = (event) => {
+    setLogUser({
+      ...logUser,
+      [event.target.name]: event.target.value
+    })
+  }
+
+  const createUser = () => {
+    createUserWithEmailAndPassword(auth, newUser.email, newUser.password)
+      .then(() => {
+        updateProfile(auth.currentUser, { displayName: newUser.name })
+          .then(() => {
+            setDoc(doc(db, newUser.name, `${newUser.name}ID`), { projects: [] })
+              .then(() => {
+                toast.success('Registro exitoso.')
+              })
+          })
+      })
+  }
+
+  const logInUser = () => {
+    signInWithEmailAndPassword(auth, logUser.email, logUser.password)
+    .then((userCredential) => {
+      if (!userCredential) {
+        toast.warn('No se encuentra registrado. Por favor regístrese')
+      } else {
+        getDoc(doc(db, `${auth.currentUser.displayName}ID`, auth.currentUser.uid))
+      }
+    })
+  }
+
 
   return (
 
@@ -97,7 +163,10 @@ function AuxNavbar() {
           <Button variant="secondary" onClick={handleCloseLogIn}>
             Cerrar
           </Button>
-          <Button variant="success">Ingresar</Button>
+          <Button variant="success" onClick={() => {
+            letLogUser()
+            navigation("/home")
+          }}>Ingresar</Button>
 
         </Modal.Footer>
 
@@ -108,7 +177,7 @@ function AuxNavbar() {
         onHide={handleCloseSingIn}
         backdrop="static"
         keyboard={false}
-        centerd
+        centered
       >
 
         <Modal.Header closeButton>
@@ -117,26 +186,26 @@ function AuxNavbar() {
 
         <Modal.Body>
 
-          <Form>
+          <Form onChange={setUser}>
 
             <Form.Group className="mb-3" controlId="formBasicText">
 
               <Form.Label>Nombre constructora</Form.Label>
-              <Form.Control type="text" placeholder="" />
+              <Form.Control name="name" type="text" placeholder="" />
 
             </Form.Group>
 
             <Form.Group className="mb-3" controlId="formBasicEmail">
 
               <Form.Label>Correo</Form.Label>
-              <Form.Control type="email" placeholder="" />
+              <Form.Control name="email" type="email" placeholder="" />
 
             </Form.Group>
 
             <Form.Group className="mb-3" controlId="formBasicPassword">
 
               <Form.Label>Contraseña</Form.Label>
-              <Form.Control type="password" placeholder="" />
+              <Form.Control name="password" type="password" placeholder="" />
               <Form.Text className="text-muted">
                 Los datos de tu compañía nunca serán compartidos con alguien más
               </Form.Text>
@@ -152,7 +221,10 @@ function AuxNavbar() {
           <Button variant="secondary" onClick={handleCloseSingIn}>
             Cerrar
           </Button>
-          <Button variant="success">Comenzar</Button>
+          <Button variant="success" onClick={() => {
+            createUser()
+            handleCloseSingIn()
+          }}>Comenzar</Button>
 
         </Modal.Footer>
 
