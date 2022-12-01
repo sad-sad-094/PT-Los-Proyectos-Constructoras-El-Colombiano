@@ -119,7 +119,7 @@ function AuxNavbar() {
 
           <Form>
 
-            <Form.Group className="mb-3" controlId="formBasicEmail">
+            <Form.Group className="mb-3" controlId="formBasicText">
 
               <Form.Label>Nombre constructora</Form.Label>
               <Form.Control type="text" placeholder="" />
