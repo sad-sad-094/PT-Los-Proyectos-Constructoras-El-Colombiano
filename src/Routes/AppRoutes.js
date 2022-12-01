@@ -5,6 +5,7 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 
 
 import LandingPage from "../Components/Pages/LandingPage";
+import HomePage from "../Components/Pages/HomePage";
 
 
 function AppRoutes() {
@@ -12,7 +13,8 @@ function AppRoutes() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={LandingPage} />
+        <Route path="/" element={<LandingPage/>} />
+        <Route path="/home" element={<HomePage/>} />
 
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>
