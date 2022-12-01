@@ -60,13 +60,13 @@ function HomePage() {
         <div className="c-container">
           <h2>Agrega nuevos proyectos</h2>
           <p>Agrega nuevos proyectos a tu portafolio de proyectos.</p>
-          <Button variant="success" onClick={handleShowNewProject}>Agregar</Button>
+          <Button variant="primary" onClick={handleShowNewProject}>Agregar</Button>
         </div>
 
         <div className="c-container">
           <h2>Agrega nuevos clientes</h2>
           <p>Agrega a tu base de datos los clientes interesados en alguno de tus proyectos.</p>
-          <Button variant="success" onClick={handleShowNewClient}>Agregar</Button>
+          <Button variant="primary" onClick={handleShowNewClient}>Agregar</Button>
         </div>
 
       </div>
@@ -227,7 +227,7 @@ function HomePage() {
           <Button variant="secondary" onClick={handleCloseNewClient}>
             Cerrar
           </Button>
-          <Button variant="success">Comenzar</Button>
+          <Button variant="success">Agregar</Button>
 
         </Modal.Footer>
 
