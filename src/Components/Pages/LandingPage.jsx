@@ -4,7 +4,6 @@ E-mail: sadw621@gmail.com */
 import React from 'react';
 
 import AuxNavbar from '../Modules/AuxNavbar';
-import MainFooter from '../Modules/MainFooter';
 
 function LandingPage() {
 
