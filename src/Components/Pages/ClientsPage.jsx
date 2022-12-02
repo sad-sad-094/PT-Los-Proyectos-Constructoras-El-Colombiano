@@ -4,7 +4,7 @@ E-mail: sadw621@gmail.com */
 import { arrayRemove, doc, updateDoc } from 'firebase/firestore';
 import React, { useState } from 'react';
 import Table from 'react-bootstrap/Table';
-import { MdDelete, MdUpdate } from 'react-icons/md';
+import { MdDelete } from 'react-icons/md';
 import { useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
