@@ -16,7 +16,7 @@ import { toast } from 'react-toastify';
 import { useDispatch } from 'react-redux';
 
 import { db, auth } from '../../Utils/Firebase';
-import { setInfo } from '../../Redux/UserInfoSlice';
+import { name } from '../../Redux/UserInfoSlice';
 
 function AuxNavbar() {
 
@@ -88,16 +88,16 @@ function AuxNavbar() {
     signInWithEmailAndPassword(auth, logUser.email, logUser.password)
       .then((userCredential) => {
         let user = userCredential.user
-        getDoc(doc(db, user.displayName, `${user.displayName}ID`))
-          .then(doc => {
-            if (doc.exists) {
-              let userData = doc.data();
-              dispatch(setInfo({ name: user.displayName, projects: userData.projects, clients: userData.clients }))
+        // getDoc(doc(db, user.displayName, `${user.displayName}ID`))
+        //   .then(doc => {
+        //     if (doc.exists) {
+        //       let userData = doc.data();
+              dispatch(name({ name: user.displayName }))
               toast.success('Bienvenido de vuelta.')
-            } else {
-              toast.error('Ha ocurrido un error con su inicio. Por favor comúniquese con el admin.')
-            }
-          })
+          //   } else {
+          //     toast.error('Ha ocurrido un error con su inicio. Por favor comúniquese con el admin.')
+          //   }
+          // })
       })
       .catch(error => {
         checkLogError(error.code)
