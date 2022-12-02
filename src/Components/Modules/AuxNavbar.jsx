@@ -9,7 +9,7 @@ import Navbar from 'react-bootstrap/Navbar';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
-import { doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
+import { doc, setDoc, updateDoc } from "firebase/firestore";
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
@@ -88,16 +88,8 @@ function AuxNavbar() {
     signInWithEmailAndPassword(auth, logUser.email, logUser.password)
       .then((userCredential) => {
         let user = userCredential.user
-        // getDoc(doc(db, user.displayName, `${user.displayName}ID`))
-        //   .then(doc => {
-        //     if (doc.exists) {
-        //       let userData = doc.data();
-              dispatch(name({ name: user.displayName }))
-              toast.success('Bienvenido de vuelta.')
-          //   } else {
-          //     toast.error('Ha ocurrido un error con su inicio. Por favor comúniquese con el admin.')
-          //   }
-          // })
+        dispatch(name({ name: user.displayName }))
+        toast.success('Bienvenido de vuelta.')
       })
       .catch(error => {
         checkLogError(error.code)

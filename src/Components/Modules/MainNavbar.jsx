@@ -24,7 +24,7 @@ function MainNavbar() {
 
         <Container>
 
-          <Navbar.Brand href="#home">Los Proyectos</Navbar.Brand>
+          <Navbar.Brand>Los Proyectos</Navbar.Brand>
           <Navbar.Toggle aria-controls="responsive-navbar-nav" />
 
           <Navbar.Collapse id="responsive-navbar-nav">
@@ -42,7 +42,7 @@ function MainNavbar() {
               <Nav.Link>
                 {userName}
               </Nav.Link>
-              <Nav.Link href="#deets">Salir</Nav.Link>
+              <Nav.Link>Salir</Nav.Link>
 
             </Nav>
 
