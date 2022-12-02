@@ -5,21 +5,27 @@ E-mail: sadw621@gmail.com */
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-  name: '',
-  projects: [],
-  clients: []
+  userInfo: {
+    
+  }
 }
 
 const userInfoSlice = createSlice({
   name: 'userInfo',
   initialState,
   reducers: {
-    setInfo: (state, action) => {
-      state.userInfo = action.payload
+    name: (state, action) => {
+      state.userInfo.name = action.payload.name
     },
+    projects: (state, action) => {
+      state.userInfo.projects = action.payload.projects
+    },
+    clients: (state, action) => {
+      state.userInfo.clients = action.payload.clients
+    }
   },
 })
 
 export default userInfoSlice.reducer;
 
-export const { setInfo } = userInfoSlice.actions;
+export const { name, projects, clients } = userInfoSlice.actions;

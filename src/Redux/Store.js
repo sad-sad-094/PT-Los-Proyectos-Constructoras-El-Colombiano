@@ -8,7 +8,5 @@ import infoReducer from './UserInfoSlice';
 
 
 export const Store = configureStore({
-  reducer: {
-    userInfo: infoReducer,
-  },
+  reducer: infoReducer,
 })
