@@ -16,14 +16,14 @@ import { db } from '../../Utils/Firebase';
 import { clients, projects } from '../../Redux/UserInfoSlice';
 
 function HomePage() {
-  
+
   const userName = useSelector((state) => state.userInfo.name);
 
 
   const dispatch = useDispatch();
 
   useEffect(() => {
-    getDoc(doc(db, 'Constructora1', 'Constructora1ID')) //TODO hacer dinámico nombre y id de colección
+    getDoc(doc(db, userName, `${userName}ID`))
       .then(doc => {
         let userData = doc.data();
         let projectsList = userData.projects;
@@ -31,9 +31,9 @@ function HomePage() {
         dispatch(projects({
           projects: projectsList,
         }),
-        dispatch(clients({
-          clients: clientsList,
-        }))
+          dispatch(clients({
+            clients: clientsList,
+          }))
         )
       })
   })
@@ -100,7 +100,7 @@ function HomePage() {
   }
 
   const setNewProject = () => {
-    updateDoc(doc(db, 'Constructora1', 'Constructora1ID'), {  //TODO hacer dinámico nombre y id de colección
+    updateDoc(doc(db, userName, `${userName}ID`), {
       projects: arrayUnion({
         code: projectInfo.codigo,
         name: projectInfo.nombre,
@@ -116,7 +116,7 @@ function HomePage() {
   }
 
   const setNewClient = () => {
-    updateDoc(doc(db, 'Constructora1', 'Constructora1ID'), {  //TODO hacer dinámico nombre y id de colección
+    updateDoc(doc(db, userName, `${userName}ID`), {
       clients: arrayUnion({
         name: clientInfo.nombre,
         email: clientInfo.correo,
