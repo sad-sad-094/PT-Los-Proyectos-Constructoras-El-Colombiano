@@ -291,7 +291,7 @@ function HomePage() {
             <Form.Group className="mb-3" controlId="formBasicNumber">
 
               <Form.Label>Fecha Nacimiento</Form.Label>
-              <Form.Control name="nacimiento" type="number" placeholder="" required />
+              <Form.Control name="nacimiento" type="date" placeholder="" required />
               <Form.Control.Feedback type="invalid">
                 Campo obligatorio.
               </Form.Control.Feedback>
