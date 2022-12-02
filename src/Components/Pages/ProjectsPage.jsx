@@ -57,7 +57,6 @@ function ProjectsPage() {
                   <th>Constructora</th>
                   <th>Contacto</th>
                   <th>Borrar</th>
-                  <th>Modificar</th>
                 </tr>
               </thead>
               <tbody>
@@ -70,7 +69,6 @@ function ProjectsPage() {
                       <td>{i.builders}</td>
                       <td>{i.contact}</td>
                       <td><MdDelete onClick={() => deleteProjects(index)} style={{cursor: 'pointer'}} /></td>
-                      <td><MdUpdate style={{cursor: 'pointer'}} /></td>
                     </tr>
                   )
                 })
