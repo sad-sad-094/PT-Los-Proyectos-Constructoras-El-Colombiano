@@ -1,70 +1,49 @@
-# Getting Started with Create React App
+# Los Proyectos Constructoras
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Es una aplicación que responde a los requerimientos técnicas de la prueba de selección de El Colombiano.
 
-## Available Scripts
+**Los Proyectos Constructoras**, es una app que permite a un administrador afiliado a una constructora, crear un perfil para su empresa y administrar la información de su portafolio de proyectos y de los clientes interesados en sus proyectos activos.
 
-In the project directory, you can run:
+Al interior de la aplicación, el usuario podrá crear un perfil para registrar su empresa, dónde tendrá acceso a las herramientas que le brinda el sistema. Estas herramientas consisten en una vista donde obtendrá la lista de sus proyectos activos y una vista donde podrá ver los clientes que están interesados en sus proyectos. A su vez tendrá a la mano formularios con los cuales podrá actualizar, constantemente, la información de los proyectos y agregar nuevos, de igual manera que lo podrá hacer con los clientes, pudiendo agregar a todo cliente nuevo que tenga interés en un proyecto.
 
-### `yarn start`
+## Descripción de la prueba
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+La prueba técnica de selección, consiste en la construcción de un sistema web que le permita a un grupo de constructoras administrar sus proyectos de vivienda y los perfiles de las personas interesadas en dichos proyectos.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+Los **requerimientos** consisten en la creación de un CRUD para los proyectos de vivienda, donde se puedan administrar y almacenar los datos de cada proyecto (Código, Nombre, Dirección, Constructora, Contacto); un CRUD para los perfiles de las personas que están interesadas en las obras. Estos, deberán realizarse con la implementación de formularios, dentro de los cuales al menos uno deberá tener la función de autocompletar (información obtenida desde la base de datos), al menos uno debe solicitar una fecha la cual deberá seleccionarse desde un calendario. Y, por último, realizar validaciones tanto del lado del servidor como del usuario.
 
-### `yarn test`
+El **stack de tecnologías** solicitado es el siguiente:
+* PHP o .Net o C# (versión 5).
+* JavaScript.
+* Base de datos de elección libre.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+El **tiempo de realización** de la prueba es de dos (2) días hábiles.
 
-### `yarn build`
+## Desarrollo de la prueba
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+**Los Poryectos Constructora** usa `Firestore` para administrar los registros de proyectos y clientes en las bases de datos, y los perfiles de las constructoras. Estas trabajan usando los métodos `getDocs`, `query`, `where`, `collection`, `updateDoc` y `setDoc` para manejar la información entre `Firestore` y la aplicación. La autenticación se realiza con los métodos de `Firebase` (_correo y constraseña_). Por último, la **Interfaz de usuario** fue construída con `React JS` como framework principal de _frontend_ y librerías como `Redux`, `Redux Toolkit`, `React-Redux`, `React-Icons`, `React-Bootstrap`, `Bootstrap`, `React-Toastify`, `React-Router-Dom` y `Normalize.css`, y el preprocesador de CSS `SASS`.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## Instrucciones para la ejecución de la aplicación en local
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Para ejecutar esta prueba técnica en local, es necesario tener instalado `Node.JS` en su versión _16.17.0_, `Yarn` en su versión _1.22.19_ y git.
 
-### `yarn eject`
+**Nota:** Para ejecutar la modificar la prueba, deberá hacerse con `Yarn` ya que la app fue construída con `Yarn`.
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+En _primer lugar_ es necesario clonar el repositorio en un directorio local, mediante consola o terminal usando el comando:
+```
+git clone https://github.com/sad-sad-094/PT-Generador-Prefiles-GSE.git
+```
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+Una vez clonado el repositorio, es necesario instalar, en el directorio donde fue clonado, las dependencias para su funcionamiento (consola o terminal):
+```
+yarn install
+```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+Una vez instaladas las dependencias, la aplicación podrá ejecutarse (consola o terminal) en un puerto local (_localhost_):
+```
+yarn start
+```
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+## Despliegue
 
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `yarn build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Los Proyecto Constructoras fue desplegado con `Firebase Hosting`.
