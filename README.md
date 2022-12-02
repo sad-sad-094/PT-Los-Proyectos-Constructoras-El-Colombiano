@@ -31,7 +31,7 @@ Para ejecutar esta prueba técnica en local, es necesario tener instalado `Node.
 
 En _primer lugar_ es necesario clonar el repositorio en un directorio local, mediante consola o terminal usando el comando:
 ```
-git clone https://github.com/sad-sad-094/PT-Generador-Prefiles-GSE.git
+git clone https://github.com/sad-sad-094/PT-Los-Proyectos-Constructoras-El-Colombiano.git
 ```
 
 Una vez clonado el repositorio, es necesario instalar, en el directorio donde fue clonado, las dependencias para su funcionamiento (consola o terminal):
