@@ -5,12 +5,8 @@ import { configureStore } from '@reduxjs/toolkit';
 
 
 import infoReducer from './UserInfoSlice';
-import userLogSlice from './UserLogSlice';
 
 
 export const Store = configureStore({
-  reducer: {
-    infoReducer,
-    userLogSlice
-  }
+  reducer: infoReducer,
 })

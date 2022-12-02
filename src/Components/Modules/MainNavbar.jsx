@@ -12,7 +12,6 @@ import { toast } from 'react-toastify';
 import { signOut } from 'firebase/auth';
 
 import auth from '../../Utils/Firebase';
-import { logOut } from '../../Redux/UserLogSlice';
 
 function MainNavbar() {
 
@@ -23,7 +22,6 @@ function MainNavbar() {
   const letLogOut = () => {
     signOut(auth())
       .then(() => {
-        dispatch(logOut());
         toast.success('Salida exitosa.')
         navigation("/");
       })
