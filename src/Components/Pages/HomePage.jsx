@@ -1,22 +1,43 @@
 /* Author: Sebastian Aguirre Duque
 E-mail: sadw621@gmail.com */
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
-import { useSelector } from 'react-redux';
-import { arrayUnion, doc, updateDoc } from 'firebase/firestore';
+import { useDispatch, useSelector } from 'react-redux';
+import { arrayUnion, doc, getDoc, updateDoc } from 'firebase/firestore';
 import { toast } from 'react-toastify';
 
 
 // import MainFooter from '../Modules/MainFooter';
 import MainNavbar from '../Modules/MainNavbar';
 import { db } from '../../Utils/Firebase';
+import { clients, projects } from '../../Redux/UserInfoSlice';
 
 function HomePage() {
-
+  
   const userName = useSelector((state) => state.userInfo.name);
+
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    getDoc(doc(db, 'Constructora1', 'Constructora1ID')) //TODO hacer dinámico nombre y id de colección
+      .then(doc => {
+        let userData = doc.data();
+        let projectsList = userData.projects;
+        let clientsList = userData.clients;
+        dispatch(projects({
+          projects: projectsList,
+        }),
+        dispatch(clients({
+          clients: clientsList,
+        }))
+        )
+      })
+  })
+
 
   const [showNewProject, setShowNewProject] = useState(false);
   const [validatedProject, setValidatedProject] = useState(false);
@@ -85,7 +106,7 @@ function HomePage() {
         name: projectInfo.nombre,
         adress: projectInfo.direccion,
         builders: projectInfo.constructora,
-        contact: projectInfo.contacto
+        contact: projectInfo.contacto,
       })
     })
       .then(() => {
@@ -101,7 +122,7 @@ function HomePage() {
         email: clientInfo.correo,
         DNI: clientInfo.documento,
         birth: clientInfo.nacimiento,
-        project: clientInfo.proyecto
+        project: clientInfo.proyecto,
       })
     })
       .then(() => {
@@ -226,7 +247,7 @@ function HomePage() {
         onHide={handleCloseNewClient}
         backdrop="static"
         keyboard={false}
-        centerd
+        centered
       >
 
         <Modal.Header closeButton>
