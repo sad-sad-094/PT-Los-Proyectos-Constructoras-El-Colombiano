@@ -4,23 +4,21 @@ E-mail: sadw621@gmail.com */
 
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import { toast } from 'react-toastify';
-import { signOut } from 'firebase/auth';
+import { getAuth, signOut } from 'firebase/auth';
 
-import auth from '../../Utils/Firebase';
 
 function MainNavbar() {
 
   const navigation = useNavigate();
-  const dispatch = useDispatch();
   const userName = useSelector((state) => state.userInfo.name);
 
   const letLogOut = () => {
-    signOut(auth())
+    signOut(getAuth())
       .then(() => {
         toast.success('Salida exitosa.')
         navigation("/");
