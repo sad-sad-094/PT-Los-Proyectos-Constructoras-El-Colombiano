@@ -8,6 +8,7 @@ import { Provider } from 'react-redux';
 import 'normalize.css';
 import './Styles/Main.scss';
 import AppRoutes from './Routes/AppRoutes';
+import { Store } from './Redux/Store';
 
 
 function App() {

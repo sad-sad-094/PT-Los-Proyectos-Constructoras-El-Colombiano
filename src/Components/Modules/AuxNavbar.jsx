@@ -9,16 +9,19 @@ import Navbar from 'react-bootstrap/Navbar';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
-import { doc, getDoc, setDoc } from "firebase/firestore";
+import { doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import { useDispatch } from 'react-redux';
 
 import { db, auth } from '../../Utils/Firebase';
+import { setInfo } from '../../Redux/UserInfoSlice';
 
 function AuxNavbar() {
 
   const navigation = useNavigate();
+  const dispatch = useDispatch();
 
   const [showLogIn, setShowLogIn] = useState(false);
 
@@ -72,8 +75,10 @@ function AuxNavbar() {
           .then(() => {
             setDoc(doc(db, newUser.name, `${newUser.name}ID`), { projects: [] })
               .then(() => {
-                setDoc(doc(db, newUser.name, `${newUser.name}ID`), { clients: [] })
-                toast.success('Registro exitoso.')
+                updateDoc(doc(db, newUser.name, `${newUser.name}ID`), { clients: [] })
+                  .then(() => {
+                    toast.success('Registro exitoso.')
+                  })
               })
           })
       })
@@ -82,11 +87,13 @@ function AuxNavbar() {
   const logInUser = () => {
     signInWithEmailAndPassword(auth, logUser.email, logUser.password)
       .then((userCredential) => {
-        getDoc(doc(db, `${auth.currentUser.displayName}ID`, auth.currentUser.uid))
+        let user = userCredential.user
+        getDoc(doc(db, user.displayName, `${user.displayName}ID`))
           .then(doc => {
             if (doc.exists) {
               let userData = doc.data();
-              console.log(userData);
+              dispatch(setInfo({ name: user.displayName, projects: userData.projects, clients: userData.clients }))
+              toast.success('Bienvenido de vuelta.')
             } else {
               toast.error('Ha ocurrido un error con su inicio. Por favor comúniquese con el admin.')
             }
@@ -110,151 +117,151 @@ function AuxNavbar() {
 
 
 
-return (
+  return (
 
-  <>
+    <>
 
-    <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark" fixed="top">
+      <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark" fixed="top">
 
-      <Container>
+        <Container>
 
-        <Navbar.Brand href="#home">Los Proyectos</Navbar.Brand>
-        <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+          <Navbar.Brand href="#home">Los Proyectos</Navbar.Brand>
+          <Navbar.Toggle aria-controls="responsive-navbar-nav" />
 
-        <Navbar.Collapse id="responsive-navbar-nav">
+          <Navbar.Collapse id="responsive-navbar-nav">
 
-          <Nav className="me-auto">
+            <Nav className="me-auto">
 
-          </Nav>
+            </Nav>
 
-          <Nav>
+            <Nav>
 
-            <Nav.Link onClick={handleShowLogIn}>
-              Ingresar
-            </Nav.Link>
-            <Nav.Link onClick={handleShowSingIn}>Comenzar</Nav.Link>
+              <Nav.Link onClick={handleShowLogIn}>
+                Ingresar
+              </Nav.Link>
+              <Nav.Link onClick={handleShowSingIn}>Comenzar</Nav.Link>
 
-          </Nav>
+            </Nav>
 
-        </Navbar.Collapse>
+          </Navbar.Collapse>
 
-      </Container>
+        </Container>
 
-    </Navbar>
+      </Navbar>
 
-    <Modal
-      show={showLogIn}
-      onHide={handleCloseLogIn}
-      backdrop="static"
-      keyboard={false}
-      centered
-    >
+      <Modal
+        show={showLogIn}
+        onHide={handleCloseLogIn}
+        backdrop="static"
+        keyboard={false}
+        centered
+      >
 
-      <Modal.Header closeButton>
-        <Modal.Title>Ingresar al protal</Modal.Title>
-      </Modal.Header>
+        <Modal.Header closeButton>
+          <Modal.Title>Ingresar al protal</Modal.Title>
+        </Modal.Header>
 
-      <Modal.Body>
+        <Modal.Body>
 
-        <Form onChange={letLogUser}>
+          <Form onChange={letLogUser}>
 
-          <Form.Group className="mb-3" controlId="formBasicEmail">
+            <Form.Group className="mb-3" controlId="formBasicEmail">
 
-            <Form.Label>Correo</Form.Label>
-            <Form.Control name="email" type="email" placeholder="" />
+              <Form.Label>Correo</Form.Label>
+              <Form.Control name="email" type="email" placeholder="" />
 
 
-          </Form.Group>
+            </Form.Group>
 
-          <Form.Group className="mb-3" controlId="formBasicPassword">
+            <Form.Group className="mb-3" controlId="formBasicPassword">
 
-            <Form.Label>Contraseña</Form.Label>
-            <Form.Control name="password" type="password" placeholder="" />
-            <Form.Text className="text-muted">
-              Los datos de tu compañía nunca serán compartidos con alguien más
-            </Form.Text>
+              <Form.Label>Contraseña</Form.Label>
+              <Form.Control name="password" type="password" placeholder="" />
+              <Form.Text className="text-muted">
+                Los datos de tu compañía nunca serán compartidos con alguien más
+              </Form.Text>
 
-          </Form.Group>
+            </Form.Group>
 
-        </Form>
+          </Form>
 
-      </Modal.Body>
+        </Modal.Body>
 
-      <Modal.Footer>
+        <Modal.Footer>
 
-        <Button variant="secondary" onClick={handleCloseLogIn}>
-          Cerrar
-        </Button>
-        <Button variant="success" onClick={() => {
-          logInUser()
-          navigation("/home")
-        }}>Ingresar</Button>
+          <Button variant="secondary" onClick={handleCloseLogIn}>
+            Cerrar
+          </Button>
+          <Button variant="success" onClick={() => {
+            logInUser()
+            navigation("/home")
+          }}>Ingresar</Button>
 
-      </Modal.Footer>
+        </Modal.Footer>
 
-    </Modal>
+      </Modal>
 
-    <Modal
-      show={showSingIn}
-      onHide={handleCloseSingIn}
-      backdrop="static"
-      keyboard={false}
-      centered
-    >
+      <Modal
+        show={showSingIn}
+        onHide={handleCloseSingIn}
+        backdrop="static"
+        keyboard={false}
+        centered
+      >
 
-      <Modal.Header closeButton>
-        <Modal.Title>Registrar constructora</Modal.Title>
-      </Modal.Header>
+        <Modal.Header closeButton>
+          <Modal.Title>Registrar constructora</Modal.Title>
+        </Modal.Header>
 
-      <Modal.Body>
+        <Modal.Body>
 
-        <Form onChange={setUser}>
+          <Form onChange={setUser}>
 
-          <Form.Group className="mb-3" controlId="formBasicText">
+            <Form.Group className="mb-3" controlId="formBasicText">
 
-            <Form.Label>Nombre constructora</Form.Label>
-            <Form.Control name="name" type="text" placeholder="" />
+              <Form.Label>Nombre constructora</Form.Label>
+              <Form.Control name="name" type="text" placeholder="" />
 
-          </Form.Group>
+            </Form.Group>
 
-          <Form.Group className="mb-3" controlId="formBasicEmail">
+            <Form.Group className="mb-3" controlId="formBasicEmail">
 
-            <Form.Label>Correo</Form.Label>
-            <Form.Control name="email" type="email" placeholder="" />
+              <Form.Label>Correo</Form.Label>
+              <Form.Control name="email" type="email" placeholder="" />
 
-          </Form.Group>
+            </Form.Group>
 
-          <Form.Group className="mb-3" controlId="formBasicPassword">
+            <Form.Group className="mb-3" controlId="formBasicPassword">
 
-            <Form.Label>Contraseña</Form.Label>
-            <Form.Control name="password" type="password" placeholder="" />
-            <Form.Text className="text-muted">
-              Los datos de tu compañía nunca serán compartidos con alguien más
-            </Form.Text>
+              <Form.Label>Contraseña</Form.Label>
+              <Form.Control name="password" type="password" placeholder="" />
+              <Form.Text className="text-muted">
+                Los datos de tu compañía nunca serán compartidos con alguien más
+              </Form.Text>
 
-          </Form.Group>
+            </Form.Group>
 
-        </Form>
+          </Form>
 
-      </Modal.Body>
+        </Modal.Body>
 
-      <Modal.Footer>
+        <Modal.Footer>
 
-        <Button variant="secondary" onClick={handleCloseSingIn}>
-          Cerrar
-        </Button>
-        <Button variant="success" onClick={() => {
-          createUser()
-          handleCloseSingIn()
-        }}>Comenzar</Button>
+          <Button variant="secondary" onClick={handleCloseSingIn}>
+            Cerrar
+          </Button>
+          <Button variant="success" onClick={() => {
+            createUser()
+            handleCloseSingIn()
+          }}>Comenzar</Button>
 
-      </Modal.Footer>
+        </Modal.Footer>
 
-    </Modal>
+      </Modal>
 
-  </>
+    </>
 
-)
+  )
 
 }
 

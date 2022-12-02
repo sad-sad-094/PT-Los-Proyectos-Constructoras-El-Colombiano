@@ -11,11 +11,11 @@ const initialState = {
 }
 
 const userInfoSlice = createSlice({
-  name: 'info',
+  name: 'userInfo',
   initialState,
   reducers: {
     setInfo: (state, action) => {
-      state.info = action.payload
+      state.userInfo = action.payload
     },
   },
 })

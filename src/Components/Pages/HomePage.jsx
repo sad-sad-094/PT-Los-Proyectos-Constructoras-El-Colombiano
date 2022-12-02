@@ -5,12 +5,15 @@ import React, { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
+import { useSelector } from 'react-redux';
 
 
 // import MainFooter from '../Modules/MainFooter';
 import MainNavbar from '../Modules/MainNavbar';
 
 function HomePage() {
+
+  const userName = useSelector((state) => state.userInfo.name);
 
   const [showNewProject, setShowNewProject] = useState(false);
   const [validatedProject, setValidatedProject] = useState(false);
@@ -52,7 +55,7 @@ function HomePage() {
 
         <div className="c-container">
 
-          <h1>Bienvenido constructora</h1>
+          <h1>Bienvenido {userName}</h1>
           <p>Administra todos tus proyectos y clientes.</p>
 
         </div>

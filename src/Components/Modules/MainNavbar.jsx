@@ -4,6 +4,7 @@ E-mail: sadw621@gmail.com */
 
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 
 import Container from 'react-bootstrap/Container';
@@ -13,6 +14,7 @@ import Navbar from 'react-bootstrap/Navbar';
 function MainNavbar() {
 
   const navigation = useNavigate();
+  const userName = useSelector((state) => state.userInfo.name);
 
   return (
 
@@ -38,7 +40,7 @@ function MainNavbar() {
             <Nav>
 
               <Nav.Link>
-                Constructora
+                {userName}
               </Nav.Link>
               <Nav.Link href="#deets">Salir</Nav.Link>
 
