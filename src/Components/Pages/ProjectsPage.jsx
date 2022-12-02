@@ -1,14 +1,19 @@
 /* Author: Sebastian Aguirre Duque
 E-mail: sadw621@gmail.com */
 
-import React from 'react';
+import React, { useState } from 'react';
 import Table from 'react-bootstrap/Table';
 import { MdDelete, MdUpdate } from 'react-icons/md';
+import { useSelector } from 'react-redux';
 
 
 import MainNavbar from '../Modules/MainNavbar';
 
 function ProjectsPage() {
+
+  let projectsA = useSelector((state) => state.userInfo.projects);
+  
+  const [listProjects] = useState(projectsA)
 
   return (
 
@@ -37,33 +42,20 @@ function ProjectsPage() {
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td>1</td>
-                  <td>Mark</td>
-                  <td>Otto</td>
-                  <td>@mdo</td>
-                  <td>@mdo</td>
-                  <td><MdDelete /></td>
-                  <td><MdUpdate /></td>
-                </tr>
-                <tr>
-                  <td>2</td>
-                  <td>Jacob</td>
-                  <td>Thornton</td>
-                  <td>@fat</td>
-                  <td>@mdo</td>
-                  <td><MdDelete /></td>
-                  <td><MdUpdate /></td>
-                </tr>
-                <tr>
-                  <td>3</td>
-                  <td>Larry</td>
-                  <td>@twitter</td>
-                  <td>@mdo</td>
-                  <td>@mdo</td>
-                  <td><MdDelete /></td>
-                  <td><MdUpdate /></td>
-                </tr>
+                {listProjects.map((i, index, listProjects) => {
+                  return (
+                    <tr>
+                      <td>{i.code}</td>
+                      <td>{i.name}</td>
+                      <td>{i.adress}</td>
+                      <td>{i.builders}</td>
+                      <td>{i.contact}</td>
+                      <td><MdDelete /></td>
+                      <td><MdUpdate /></td>
+                    </tr>
+                  )
+                })
+                }
               </tbody>
             </Table>
           </div>

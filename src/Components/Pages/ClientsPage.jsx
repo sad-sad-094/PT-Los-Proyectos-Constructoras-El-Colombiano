@@ -1,14 +1,19 @@
 /* Author: Sebastian Aguirre Duque
 E-mail: sadw621@gmail.com */
 
-import React from 'react';
+import React, { useState } from 'react';
 import Table from 'react-bootstrap/Table';
 import { MdDelete, MdUpdate } from 'react-icons/md';
+import { useSelector } from 'react-redux';
 
 
 import MainNavbar from '../Modules/MainNavbar';
 
 function ClientsPage() {
+
+  let clientsA = useSelector((state) => state.userInfo.clients);
+
+  const [listClients] = useState(clientsA)
 
   return (
 
@@ -29,7 +34,6 @@ function ClientsPage() {
                 <tr>
                   <th>#</th>
                   <th>Nombre</th>
-                  <th>Apellidos</th>
                   <th>Documento</th>
                   <th>Fecha de nacimiento</th>
                   <th>Proyecto</th>
@@ -38,36 +42,21 @@ function ClientsPage() {
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td>1</td>
-                  <td>Mark</td>
-                  <td>Otto</td>
-                  <td>@mdo</td>
-                  <td>Otto</td>
-                  <td></td>
-                  <td><MdDelete /></td>
-                  <td><MdUpdate /></td>
-                </tr>
-                <tr>
-                  <td>2</td>
-                  <td>Jacob</td>
-                  <td>Thornton</td>
-                  <td>@fat</td>
-                  <td>Otto</td>
-                  <td></td>
-                  <td><MdDelete /></td>
-                  <td><MdUpdate /></td>
-                </tr>
-                <tr>
-                  <td>3</td>
-                  <td>Larry</td>
-                  <td>@twitter</td>
-                  <td>Otto</td>
-                  <td>@mdo</td>
-                  <td></td>
-                  <td><MdDelete /></td>
-                  <td><MdUpdate /></td>
-                </tr>
+                {listClients.map((i, index, listClients) => {
+                  return (
+                    <tr>
+                      <td>{index + 1}</td>
+                      <td>{i.name}</td>
+                      <td>{i.DNI}</td>
+                      <td>{i.birth}</td>
+                      <td>{i.project}</td>
+                      <td><MdDelete /></td>
+                      <td><MdUpdate /></td>
+                    </tr>
+                  )
+                })
+                }
+
               </tbody>
             </Table>
           </div>
