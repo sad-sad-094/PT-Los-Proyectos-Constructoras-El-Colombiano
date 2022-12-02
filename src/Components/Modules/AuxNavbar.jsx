@@ -40,9 +40,11 @@ function AuxNavbar() {
 
   const defaultUser = () => {
     return {
-      name:'',
+      name: '',
       email: '',
-      password: ''
+      password: '',
+      projects: '',
+      clients: ''
     }
   }
 
@@ -70,6 +72,7 @@ function AuxNavbar() {
           .then(() => {
             setDoc(doc(db, newUser.name, `${newUser.name}ID`), { projects: [] })
               .then(() => {
+                setDoc(doc(db, newUser.name, `${newUser.name}ID`), { clients: [] })
                 toast.success('Registro exitoso.')
               })
           })
@@ -78,161 +81,180 @@ function AuxNavbar() {
 
   const logInUser = () => {
     signInWithEmailAndPassword(auth, logUser.email, logUser.password)
-    .then((userCredential) => {
-      if (!userCredential) {
-        toast.warn('No se encuentra registrado. Por favor regístrese')
-      } else {
+      .then((userCredential) => {
         getDoc(doc(db, `${auth.currentUser.displayName}ID`, auth.currentUser.uid))
-      }
-    })
+          .then(doc => {
+            if (doc.exists) {
+              let userData = doc.data();
+              console.log(userData);
+            } else {
+              toast.error('Ha ocurrido un error con su inicio. Por favor comúniquese con el admin.')
+            }
+          })
+      })
+      .catch(error => {
+        checkLogError(error.code)
+      })
+  }
+
+  const checkLogError = (code) => {
+    switch (code) {
+      case "auth/user-not-found":
+      case "auth/wrong-password":
+        toast.warn("Correo o contraseña incorrectos");
+        break;
+      default:
+        break;
+    }
   }
 
 
-  return (
 
-    <>
+return (
 
-      <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark" fixed="top">
+  <>
 
-        <Container>
+    <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark" fixed="top">
 
-          <Navbar.Brand href="#home">Los Proyectos</Navbar.Brand>
-          <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+      <Container>
 
-          <Navbar.Collapse id="responsive-navbar-nav">
+        <Navbar.Brand href="#home">Los Proyectos</Navbar.Brand>
+        <Navbar.Toggle aria-controls="responsive-navbar-nav" />
 
-            <Nav className="me-auto">
+        <Navbar.Collapse id="responsive-navbar-nav">
 
-            </Nav>
+          <Nav className="me-auto">
 
-            <Nav>
+          </Nav>
 
-              <Nav.Link onClick={handleShowLogIn}>
-                Ingresar
-              </Nav.Link>
-              <Nav.Link onClick={handleShowSingIn}>Comenzar</Nav.Link>
+          <Nav>
 
-            </Nav>
+            <Nav.Link onClick={handleShowLogIn}>
+              Ingresar
+            </Nav.Link>
+            <Nav.Link onClick={handleShowSingIn}>Comenzar</Nav.Link>
 
-          </Navbar.Collapse>
+          </Nav>
 
-        </Container>
+        </Navbar.Collapse>
 
-      </Navbar>
+      </Container>
 
-      <Modal
-        show={showLogIn}
-        onHide={handleCloseLogIn}
-        backdrop="static"
-        keyboard={false}
-        centered
-      >
+    </Navbar>
 
-        <Modal.Header closeButton>
-          <Modal.Title>Ingresar al protal</Modal.Title>
-        </Modal.Header>
+    <Modal
+      show={showLogIn}
+      onHide={handleCloseLogIn}
+      backdrop="static"
+      keyboard={false}
+      centered
+    >
 
-        <Modal.Body>
+      <Modal.Header closeButton>
+        <Modal.Title>Ingresar al protal</Modal.Title>
+      </Modal.Header>
 
-          <Form>
+      <Modal.Body>
 
-            <Form.Group className="mb-3" controlId="formBasicEmail">
+        <Form onChange={letLogUser}>
 
-              <Form.Label>Correo</Form.Label>
-              <Form.Control type="email" placeholder="" />
+          <Form.Group className="mb-3" controlId="formBasicEmail">
+
+            <Form.Label>Correo</Form.Label>
+            <Form.Control name="email" type="email" placeholder="" />
 
 
-            </Form.Group>
+          </Form.Group>
 
-            <Form.Group className="mb-3" controlId="formBasicPassword">
+          <Form.Group className="mb-3" controlId="formBasicPassword">
 
-              <Form.Label>Contraseña</Form.Label>
-              <Form.Control type="password" placeholder="" />
-              <Form.Text className="text-muted">
-                Los datos de tu compañía nunca serán compartidos con alguien más
-              </Form.Text>
+            <Form.Label>Contraseña</Form.Label>
+            <Form.Control name="password" type="password" placeholder="" />
+            <Form.Text className="text-muted">
+              Los datos de tu compañía nunca serán compartidos con alguien más
+            </Form.Text>
 
-            </Form.Group>
+          </Form.Group>
 
-          </Form>
+        </Form>
 
-        </Modal.Body>
+      </Modal.Body>
 
-        <Modal.Footer>
+      <Modal.Footer>
 
-          <Button variant="secondary" onClick={handleCloseLogIn}>
-            Cerrar
-          </Button>
-          <Button variant="success" onClick={() => {
-            letLogUser()
-            navigation("/home")
-          }}>Ingresar</Button>
+        <Button variant="secondary" onClick={handleCloseLogIn}>
+          Cerrar
+        </Button>
+        <Button variant="success" onClick={() => {
+          logInUser()
+          navigation("/home")
+        }}>Ingresar</Button>
 
-        </Modal.Footer>
+      </Modal.Footer>
 
-      </Modal>
+    </Modal>
 
-      <Modal
-        show={showSingIn}
-        onHide={handleCloseSingIn}
-        backdrop="static"
-        keyboard={false}
-        centered
-      >
+    <Modal
+      show={showSingIn}
+      onHide={handleCloseSingIn}
+      backdrop="static"
+      keyboard={false}
+      centered
+    >
 
-        <Modal.Header closeButton>
-          <Modal.Title>Registrar constructora</Modal.Title>
-        </Modal.Header>
+      <Modal.Header closeButton>
+        <Modal.Title>Registrar constructora</Modal.Title>
+      </Modal.Header>
 
-        <Modal.Body>
+      <Modal.Body>
 
-          <Form onChange={setUser}>
+        <Form onChange={setUser}>
 
-            <Form.Group className="mb-3" controlId="formBasicText">
+          <Form.Group className="mb-3" controlId="formBasicText">
 
-              <Form.Label>Nombre constructora</Form.Label>
-              <Form.Control name="name" type="text" placeholder="" />
+            <Form.Label>Nombre constructora</Form.Label>
+            <Form.Control name="name" type="text" placeholder="" />
 
-            </Form.Group>
+          </Form.Group>
 
-            <Form.Group className="mb-3" controlId="formBasicEmail">
+          <Form.Group className="mb-3" controlId="formBasicEmail">
 
-              <Form.Label>Correo</Form.Label>
-              <Form.Control name="email" type="email" placeholder="" />
+            <Form.Label>Correo</Form.Label>
+            <Form.Control name="email" type="email" placeholder="" />
 
-            </Form.Group>
+          </Form.Group>
 
-            <Form.Group className="mb-3" controlId="formBasicPassword">
+          <Form.Group className="mb-3" controlId="formBasicPassword">
 
-              <Form.Label>Contraseña</Form.Label>
-              <Form.Control name="password" type="password" placeholder="" />
-              <Form.Text className="text-muted">
-                Los datos de tu compañía nunca serán compartidos con alguien más
-              </Form.Text>
+            <Form.Label>Contraseña</Form.Label>
+            <Form.Control name="password" type="password" placeholder="" />
+            <Form.Text className="text-muted">
+              Los datos de tu compañía nunca serán compartidos con alguien más
+            </Form.Text>
 
-            </Form.Group>
+          </Form.Group>
 
-          </Form>
+        </Form>
 
-        </Modal.Body>
+      </Modal.Body>
 
-        <Modal.Footer>
+      <Modal.Footer>
 
-          <Button variant="secondary" onClick={handleCloseSingIn}>
-            Cerrar
-          </Button>
-          <Button variant="success" onClick={() => {
-            createUser()
-            handleCloseSingIn()
-          }}>Comenzar</Button>
+        <Button variant="secondary" onClick={handleCloseSingIn}>
+          Cerrar
+        </Button>
+        <Button variant="success" onClick={() => {
+          createUser()
+          handleCloseSingIn()
+        }}>Comenzar</Button>
 
-        </Modal.Footer>
+      </Modal.Footer>
 
-      </Modal>
+    </Modal>
 
-    </>
+  </>
 
-  )
+)
 
 }
 
