@@ -44,6 +44,36 @@ Una vez instaladas las dependencias, la aplicación podrá ejecutarse (consola o
 yarn start
 ```
 
+## Instrucciones para despliegue de la aplicación en `Firebase Hosting`
+
+Para desplegar la aplicación en `Firebase Hosting`. Es necesario instalar la `Firebase CLI`.
+
+Esta se puede instalar de la siguiente manera:
+```
+yarn global add firebase-tools
+```
+Luego configurar los servidores de `Firebase Hosting`. Esto se realiza con los siguientes pasos:
+
+1.
+```
+yarn build
+```
+2.
+```
+firebase login
+```
+3.
+```
+firebase init
+```
+4.
+```
+firebase deploy
+```
+
+**Nota:** algunos de estos comandos tienen sus propios internos que deberán ser seguidos.
+
+
 ## Despliegue
 
 Los Proyecto Constructoras fue desplegado con `Firebase Hosting`.
