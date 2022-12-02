@@ -4,17 +4,30 @@ E-mail: sadw621@gmail.com */
 
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
-
-
+import { useDispatch, useSelector } from 'react-redux';
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
+import { toast } from 'react-toastify';
+import { signOut } from 'firebase/auth';
+
+import auth from '../../Utils/Firebase';
+import { logOut } from '../../Redux/UserLogSlice';
 
 function MainNavbar() {
 
   const navigation = useNavigate();
+  const dispatch = useDispatch();
   const userName = useSelector((state) => state.userInfo.name);
+
+  const letLogOut = () => {
+    signOut(auth())
+      .then(() => {
+        dispatch(logOut());
+        toast.success('Salida exitosa.')
+        navigation("/");
+      })
+  }
 
   return (
 
@@ -42,7 +55,7 @@ function MainNavbar() {
               <Nav.Link>
                 {userName}
               </Nav.Link>
-              <Nav.Link>Salir</Nav.Link>
+              <Nav.Link onClick={letLogOut}>Salir</Nav.Link>
 
             </Nav>
 

@@ -17,6 +17,7 @@ import { useDispatch } from 'react-redux';
 
 import { db, auth } from '../../Utils/Firebase';
 import { name } from '../../Redux/UserInfoSlice';
+import { logIn } from '../../Redux/UserLogSlice';
 
 function AuxNavbar() {
 
@@ -87,9 +88,11 @@ function AuxNavbar() {
   const logInUser = () => {
     signInWithEmailAndPassword(auth, logUser.email, logUser.password)
       .then((userCredential) => {
-        let user = userCredential.user
-        dispatch(name({ name: user.displayName }))
-        toast.success('Bienvenido de vuelta.')
+        let user = userCredential.user;
+        dispatch(logIn());
+        dispatch(name({ name: user.displayName }));
+        toast.success('Bienvenido de vuelta.');
+        navigation("/home");
       })
       .catch(error => {
         checkLogError(error.code)
@@ -184,10 +187,7 @@ function AuxNavbar() {
           <Button variant="secondary" onClick={handleCloseLogIn}>
             Cerrar
           </Button>
-          <Button variant="success" onClick={() => {
-            logInUser()
-            navigation("/home")
-          }}>Ingresar</Button>
+          <Button variant="success" onClick={logInUser}>Ingresar</Button>
 
         </Modal.Footer>
 
